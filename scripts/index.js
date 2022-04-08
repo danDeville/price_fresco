@@ -1,14 +1,19 @@
-const API = 'https://backend-principe-fresco.herokuapp.com/camisetas/'
+import { carrito, obtenerCarroLocalStorage } from "./carrito-compras.js";
 
-const listarCards = document.getElementById('listarCards')
+const API = "https://backend-principe-fresco.herokuapp.com/camisetas/";
+// await getData(API);
+carrito();
+obtenerCarroLocalStorage();
 
-const getApi = async(url) => {
-  const listarApi  = await axios.get(url)
-  const { data } = listarApi
+const listarCards = document.getElementById("listarCards");
 
-  listarCards.innerHTML = ''
-  data.forEach(e => {
-    const { id,titulo, precio, imagenFront } = e
+const getApi = async (url) => {
+  const listarApi = await axios.get(url);
+  const { data } = listarApi;
+
+  listarCards.innerHTML = "";
+  data.forEach((e) => {
+    const { id, titulo, precio, imagenFront } = e;
     listarCards.innerHTML += `
     <div class="col s12 m4">
       <div class="card">
@@ -18,17 +23,17 @@ const getApi = async(url) => {
         <div class="card-content center-align">
           <span class="card-title">${titulo}</span>
           <p>${precio}</p>
-          <buutton class="btn black" style="margin-top: 12px">Ver Detalle</buutton>
+          <button class="btn black carrito" style="margin-top: 12px" id=${id}>Agregar al carrito</button>
         </div>
       </div>
-    </div>
-    `
-  })
-}
+    </div>    
+    `;
+  });
+};
 
-getApi(API)
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.querySelectorAll(".sidenav");
+  var instances = M.Sidenav.init(elems);
+});
 
-document.addEventListener('DOMContentLoaded', function() {
-  var elems = document.querySelectorAll('.sidenav');
-  var instances = M.Sidenav.init(elems, options);
-})
+getApi(API);
